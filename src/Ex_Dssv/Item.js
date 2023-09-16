@@ -1,8 +1,10 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
 
 export default class Item extends Component {
   render() {
     let { id, sdt, name, email } = this.props.user;
+    console.log("test",this.props);
     return (
       <tr>
         <td>{id}</td>

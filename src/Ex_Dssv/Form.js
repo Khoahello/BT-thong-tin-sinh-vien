@@ -2,8 +2,10 @@ import { message } from 'antd';
 import axios from 'axios';
 import React, { Component } from 'react'
 import { BASE_URL_DSSV } from './constant';
+import { SET_USERS } from './redux/userReducer';
+import { connect } from 'react-redux';
 
-export default class Form extends Component {
+class Form extends Component {
     state = {
         id: "",
         sdt: "",
@@ -14,18 +16,27 @@ export default class Form extends Component {
         var { name, value } = e.target;
         this.setState({ [name]: value });
       };
-    
-      handleCreate = () => {
-        console.log("create", this.state);
+    // Trong file Form.js
+    handleCreate = () => {
+    console.log("create", this.state);
+    axios
+      .post(BASE_URL_DSSV, this.state)
+      .then((res) => {
+        message.success("Thêm thành công");
         axios
-          .post(BASE_URL_DSSV, this.state)
+          .get(BASE_URL_DSSV)
           .then((res) => {
-            message.success("Thêm thành công");
+            console.log(res);
+            this.props.handleSetUsers(res.data);
           })
           .catch((err) => {
-            message.error("Đã có lỗi xảy ra");
+            console.log(err);
           });
-      };
+      })
+      .catch((err) => {
+        message.error("Đã có lỗi xảy ra");
+      });
+  };
   render() {
     return (
       <div>
@@ -59,3 +70,16 @@ export default class Form extends Component {
     )
   }
 }
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+      handleSetUsers: (users) => {
+        dispatch({
+          type: SET_USERS,
+          payload: users,
+        });
+      },
+    };
+  };
+  
+  export default connect(null, mapDispatchToProps)(Form);

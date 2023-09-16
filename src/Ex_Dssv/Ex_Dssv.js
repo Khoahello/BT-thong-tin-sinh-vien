@@ -5,7 +5,7 @@ import List from './List'
 export default class Ex_Dssv extends Component {
   render() {
     return (
-      <div>
+      <div className='container'>
         <Form/>
         <List/>
       </div>

@@ -12,11 +12,10 @@ class Form extends Component {
         name: "",
         email: "",
       };
-      handleChangeForm = (e) => {
+    handleChangeForm = (e) => {
         var { name, value } = e.target;
         this.setState({ [name]: value });
-      };
-    // Trong file Form.js
+    };
     handleCreate = () => {
     console.log("create", this.state);
     axios
@@ -36,7 +35,7 @@ class Form extends Component {
       .catch((err) => {
         message.error("Đã có lỗi xảy ra");
       });
-  };
+    };
   render() {
     return (
       <div>
